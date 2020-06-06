@@ -1,13 +1,9 @@
 /**
- * @file main.c
- *
- * @author  (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2020-06-03
+ * Compilar:
+ * gcc -Wall -std=c99 -o inventario.out main.c stock.c
  * 
- * @copyright Copyright (c) 2020
- * 
+ * Ejecutar:
+ * ./inventario.out
  */
 
 #include <stdio.h>
@@ -27,6 +23,7 @@
  */
 int menu( void ) {
 
+	//Guarda la opcion del usuario
 	int eleccion;
 	printf("\n\t\t\t INVENTARIO \n\n");
 
@@ -46,13 +43,15 @@ int menu( void ) {
 }
 
 /**
- * @brief Generar un codigo de barras mediante la suma de numeros aleatorios
+ * @brief Genera un codigo de barras mediante la suma de numeros aleatorios
  *
  * @return int El codigo de barras generado
  */
 int Aleatorio( void ) {
 
 	srand( time( 0 ) );
+
+	//Variable que almacena la suma
       int numero = 0;
 
 	for( size_t i = 0; i < ( 4 + rand() % ( 8 - 4 ) ) ; i++ ) {
@@ -71,24 +70,33 @@ int Aleatorio( void ) {
  */
 void Add_Inventario( Stock *this ) {
 
+	//Almacena el numero para repetir
 	int tam = 0;
     	printf("\nCuantos productos quiere añadir?: "); scanf("%i", &tam );
 
+	//Contador
       size_t i = 0;
 
       while( i < tam ) {
 
             fflush(stdin);
+
+		//Variable de un objeto producto
             Producto p;
+
+		//Almacena una cadena
             char nombre[ 32 ];
             printf("\nIngresa el nombre del producto: "); scanf("%s", &nombre );
 
+		//Almacena la cantidad
             int cantidad;
             printf("Ingresa la cantidad de producto: "); scanf("%i", &cantidad );
 
+		//Almacena el codigo de barras
     		int codigo = Aleatorio();
             printf("Su codigo es: %i\n", codigo );
 
+		//Almacena el precio
             float precio;
             printf("Ingresa el precio del producto: "); scanf("%f", &precio );
 
@@ -96,6 +104,7 @@ void Add_Inventario( Stock *this ) {
             p.precio = precio;
            	strcpy( p.nombre, nombre );
 
+		//Añade el producto al inventario
             Stock_add( this, &p, cantidad );
 
             i++;
@@ -109,11 +118,14 @@ void Add_Inventario( Stock *this ) {
  */
 void Remove_Inventario( Stock *this ) {
 
+	//Variable para almacenar el codigo de barras
 	int codigo = 0;
     	printf("\nIngresa el codigo de barras: "); scanf("%i", &codigo);
 
+	//Si el producto se encuentra, lo retira
       if( Stock_search_by_bar_code( this, codigo ) ) {
-
+		
+		//Variable de un objeto producto
             Producto p = Stock_get( this );
             Stock_remove( this, &p );
 
@@ -135,11 +147,13 @@ void Remove_Inventario( Stock *this ) {
  */
 void Search_Inventario( Stock *this ) {
 
+	//Variable para almacenar el codigo de barras
 	int codigo = 0;
     	printf("\nIngresa el codigo de barras: "); scanf("%i", &codigo);
 
       if( Stock_search_by_bar_code( this, codigo ) ) {
-
+		
+		//Variable de un objeto producto
       	Producto p = Stock_get( this );
             printf("\nProducto: %s\n", p.nombre );
       	printf("Codigo de barras: %i\n", p.bar_code );
@@ -175,6 +189,7 @@ void Report_Inventario( Stock *this ) {
  */
 void PIB_Inventario( Stock *this ) {
 
+	//Variable para almacenar dinero
 	float efectivo = 0;
     	Stock_PIB( this, &efectivo );
       printf("El producto interno bruto es:  $  %.2f \n", efectivo );
@@ -187,7 +202,8 @@ void PIB_Inventario( Stock *this ) {
  */
 void Sort_Inventario( Stock *this ) {
 
-    	Stock_Ordenamiento( this ) ? printf("\nSe ordeno la lista.\n") : printf("\nLa lista esta vacia, no hay nada que ordenar.\n");
+    	Stock_Ordenamiento( this ) ? printf("\nSe ordeno la lista.\n") : 
+	    printf("\nLa lista esta vacia, no hay nada que ordenar.\n");
 }
 
 /**
@@ -239,7 +255,7 @@ int main( void ) {
 
                  		break;
 
-			case 5: //	Producto Interno Bruto
+			case 5: //Producto Interno Bruto
 
 				PIB_Inventario( stock );
 
@@ -262,7 +278,7 @@ int main( void ) {
 
 	} while( opcion != 0 );
 
-	// destruye al inventario    
+	//Destruye al inventario    
       Stock_delete( stock ) ? printf("\nSe elimino el inventario\n") : printf("\nNo se elimino el inventario\n");
 
       return 0;

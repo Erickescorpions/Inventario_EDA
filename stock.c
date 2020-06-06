@@ -247,9 +247,9 @@ bool DLL_Print( DLL* this ) {
             for( Node* it = this->first; it != NULL; it = it->next ) {
                   
                   printf("Producto: %s\n", it->item.nombre );
-                  printf("Codigo de barras es: %i\n", it->cantidad );
+                  printf("Cantidad: %i\n", it->cantidad );
                   printf("Codigo de barras: %i\n", it->item.bar_code );
-                  printf("El precio es: %.2f\n\n", it->item.precio );
+                  printf("Precio: %.2f\n\n", it->item.precio );
                   fprintf( inventario, "%s\t\t", it->item.nombre );
                   fprintf( inventario, "%i\t\t", it->cantidad );
                   fprintf( inventario, "%i\t\t\t", it->item.bar_code );
