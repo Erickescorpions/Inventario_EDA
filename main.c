@@ -29,10 +29,10 @@ int menu( void ) {
 
 	printf("\tOPCION:\t\t\t\t\t\tCODIGO:\n\n");
 	printf("Salir del programa \t\t\t\t\t 0\n");
-	printf("Anadir productos \t\t\t\t\t 1\n");
+	printf("Añadir productos \t\t\t\t\t 1\n");
 	printf("Retirar un producto \t\t\t\t\t 2\n");
 	printf("Buscar un producto \t\t\t\t\t 3\n");
-	printf("Mostrar los productos existentes \t\t\t 4\n");
+	printf("Hacer un reporte de los productos \t\t\t 4\n");
 	printf("Mostrar el producto interno bruto\t\t\t 5\n");
 	printf("Ordenar inventario( mediante cantidad ) \t\t 6\n");
 	printf("Vaciar el inventario \t\t\t\t\t 7\n");
