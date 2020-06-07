@@ -66,7 +66,7 @@ int Aleatorio() {
 /**
  * @brief Imprime en pantalla caracteristicas del producto
  * 
- * @param p Referencia de una copia a un objeto Producto
+ * @param p Referencia a un objeto Producto
  */
 void Print( Producto* p ) {
 
@@ -98,11 +98,6 @@ void Add_Inventario( Stock *this ) {
 
 		//Almacena una cadena
             char nombre[ 32 ];
-
-		//En el scanf colocamos solo el nombre de la variable( sin el & ) 
-		//debido a que la variable "nombre" es un bloque continuo de memoria
-		//por lo tanto no es necesario enviar su direccion, ya que es como si
-		//fuera un conjunto de punteros.
             printf("\nIngresa el nombre del producto: "); scanf("%s", nombre );
 
 		//Almacena la cantidad
@@ -224,7 +219,7 @@ void Sort_Inventario( Stock *this ) {
 /**
  * @brief Vacia el Inventario
  * 
- * @param this 
+ * @param this Referencia a un objeto Stock
  */
 void MakeEmpty_Inventario( Stock* this ) {
 
