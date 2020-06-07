@@ -21,7 +21,7 @@
  * 
  * @return int La opcion a elegir del usuario
  */
-int menu( void ) {
+int menu() {
 
 	//Guarda la opcion del usuario
 	int eleccion;
@@ -47,7 +47,7 @@ int menu( void ) {
  *
  * @return int El codigo de barras generado
  */
-int Aleatorio( void ) {
+int Aleatorio() {
 
 	srand( time( 0 ) );
 
@@ -61,6 +61,18 @@ int Aleatorio( void ) {
 	}
 
       return numero;
+}
+
+/**
+ * @brief Imprime en pantalla caracteristicas del producto
+ * 
+ * @param p Referencia de una copia a un objeto Producto
+ */
+void Print( Producto* p ) {
+
+	printf("Producto: %s\n", p->nombre );
+      printf("Codigo de barras: %i\n", p->bar_code );
+      printf("Precio: %.2f\n", p->precio );
 }
 
 /**
@@ -86,7 +98,12 @@ void Add_Inventario( Stock *this ) {
 
 		//Almacena una cadena
             char nombre[ 32 ];
-            printf("\nIngresa el nombre del producto: "); scanf("%s", &nombre );
+
+		//En el scanf colocamos solo el nombre de la variable( sin el & ) 
+		//debido a que la variable "nombre" es un bloque continuo de memoria
+		//por lo tanto no es necesario enviar su direccion, ya que es como si
+		//fuera un conjunto de punteros.
+            printf("\nIngresa el nombre del producto: "); scanf("%s", nombre );
 
 		//Almacena la cantidad
             int cantidad;
@@ -123,16 +140,14 @@ void Remove_Inventario( Stock *this ) {
     	printf("\nIngresa el codigo de barras: "); scanf("%i", &codigo);
 
 	//Si el producto se encuentra, lo retira
-      if( Stock_search_by_bar_code( this, codigo ) ) {
+      if( Stock_search_by_bar_code( this, codigo ) == true ) {
 		
 		//Variable de un objeto producto
             Producto p = Stock_get( this );
             Stock_remove( this, &p );
 
-            printf("Se ha retirado el producto\n\n");
-		printf("Producto: %s\n", p.nombre );
-      	printf("Codigo de barras: %i\n", p.bar_code );
-      	printf("Precio: %.2f\n", p.precio );
+            printf("\nSe ha retirado el producto\n\n");
+		Print( &p );
 
       } else {
 
@@ -151,13 +166,13 @@ void Search_Inventario( Stock *this ) {
 	int codigo = 0;
     	printf("\nIngresa el codigo de barras: "); scanf("%i", &codigo);
 
-      if( Stock_search_by_bar_code( this, codigo ) ) {
+      if( Stock_search_by_bar_code( this, codigo ) == true ) {
 		
+		printf("\nSe ha encontrado el producto.\n\n");
+
 		//Variable de un objeto producto
       	Producto p = Stock_get( this );
-            printf("\nProducto: %s\n", p.nombre );
-      	printf("Codigo de barras: %i\n", p.bar_code );
-      	printf("El precio es: %.2f\n", p.precio );
+            Print( &p );
 
       } else {
 
@@ -192,7 +207,7 @@ void PIB_Inventario( Stock *this ) {
 	//Variable para almacenar dinero
 	float efectivo = 0;
     	Stock_PIB( this, &efectivo );
-      printf("El producto interno bruto es:  $  %.2f \n", efectivo );
+      printf("\nEl producto interno bruto es:  $  %.2f\n", efectivo );
 }
 
 /**
@@ -218,7 +233,7 @@ void MakeEmpty_Inventario( Stock* this ) {
 }
 
 
-int main( void ) {
+int main() {
 
       Stock* stock = Stock_new();
 
@@ -243,13 +258,13 @@ int main( void ) {
 
 				break;
 
-		 	case 3: //Buscar mediante Codigo de barras
+		 	case 3: //Buscar mediante codigo de barras
 
 				Search_Inventario( stock );
 				
 				break;
 
-            	case 4: //Reporte en un archivo
+            	case 4: //Reporte en un archivo y en pantalla
 
 				Report_Inventario( stock );
 
@@ -272,7 +287,7 @@ int main( void ) {
 
 				break;
 
-			default: printf("Opcion incorrecta");
+			default: printf("\nIngresa una opcion valida.\n");
                               
       	}
 

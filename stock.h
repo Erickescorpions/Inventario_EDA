@@ -69,7 +69,7 @@ bool DLL_Delete( DLL** this );
 void DLL_InsertBack( DLL* this, Producto* p, size_t cant );
 
 /**
- * @brief Retira un producto del inventario, en el caso de su cantidad ser 0 elimina el producto completamente 
+ * @brief Retira un producto de la lista, en el caso de su cantidad ser 0 elimina el producto completamente 
  * 
  * @param this Referencia a un objeto DLL
  * @return Producto Referencia a un objeto Producto
@@ -94,7 +94,7 @@ bool DLL_Search( DLL* this, int bar_code );
 Producto DLL_Peek( DLL* this );
 
 /**
- * @brief Imprime el reporte de los productos de la lista en un archivo txt
+ * @brief Imprime el reporte de los productos de la lista en un archivo txt y en pantalla
  * 
  * @param this Referencia a un objeto DLL
  * @return true Se realizo el reporte, false No se realizao el reporte
@@ -102,7 +102,7 @@ Producto DLL_Peek( DLL* this );
 bool DLL_Print( DLL* this );
 
 /**
- * @brief Elimina los nodos de la lista
+ * @brief Elimina los nodos, pero se conserva la lista
  * 
  * @param this Referencia a un objeto DLL
  */

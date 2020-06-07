@@ -75,7 +75,7 @@ bool DLL_Delete( DLL** this ) {
 
 void DLL_InsertBack( DLL* this, Producto* p, size_t cant ) {
 
-      assert( this );
+      assert( this != NULL );
 
       Node* n = new_node( p, cant );
       if( n != NULL ) {
@@ -100,19 +100,12 @@ static void DLL_RemoveFront( DLL* this ) {
       assert( this != NULL );
 
       if( DLL_IsEmpty( this ) == false ) {
-
-            if( this->len == 1 ) {
-
-                  free( this->first );
-                  reset( this );
-            } else {
             
-                  Node* tmp = this->first->next;
-                  free( this->first );
-                  this->first = tmp;
-                  this->first->prev = NULL;
-                  --this->len;
-            }
+            Node* tmp = this->first->next;
+            free( this->first );
+            this->first = tmp;
+            this->first->prev = NULL;
+            --this->len;
       }      
 }
 
@@ -123,18 +116,12 @@ static void DLL_RemoveBack( DLL* this ) {
 
       if( DLL_IsEmpty( this ) == false ) {
 
-            if( this->len == 1 ) {
-
-                  free( this->last );
-                  reset( this );
-            } else {
-
-                  Node* tmp = this->last->prev;
-                  free( this->last );
-                  this->last = tmp;
-                  this->last->next = NULL;
-                  --this->len;
-            }
+            Node* tmp = this->last->prev;
+            free( this->last );
+            this->last = tmp;
+            this->last->next = NULL;
+            --this->len;
+            
       }    
 }
 
@@ -144,7 +131,7 @@ Producto DLL_Remove( DLL* this ) {
       assert( this != NULL );
       Producto p;
 
-      if( DLL_IsEmpty( this ) == false && NULL != this->cursor ) {
+      if( DLL_IsEmpty( this ) == false && this->cursor != NULL ) {
             
             Node* tmp_next = this->cursor->next;
             Node* tmp_prev = this->cursor->prev;
@@ -227,7 +214,7 @@ Producto DLL_Peek( DLL* this ) {
 
 bool DLL_Print( DLL* this ) {
 
-      assert( this );
+      assert( this != NULL );
 
       bool done = false;
       if( DLL_IsEmpty( this ) == false ) {
@@ -265,7 +252,7 @@ bool DLL_Print( DLL* this ) {
 
 void DLL_MakeEmpty( DLL* this ) {
 
-      assert( this );
+      assert( this != NULL );
       while( this->len != 0 ) {
 
             Node* tmp = this->first->next;
@@ -278,7 +265,21 @@ void DLL_MakeEmpty( DLL* this ) {
 }
 
 
+void DLL_PIB( DLL* this, float *ganan ) {
+
+      if( this->len != 0 ) {
+
+            for( Node* tmp = this->first; tmp != NULL; tmp = tmp->next ) {
+
+				*ganan = *ganan + ( tmp->item.precio * tmp->cantidad );
+			}
+      }
+}
+
+
 static size_t DLL_Contador( DLL* this, Node* n ) {
+
+      assert( n != NULL );
 
       Node* tmp = n;
       size_t i = 0;
@@ -290,17 +291,6 @@ static size_t DLL_Contador( DLL* this, Node* n ) {
       }
 
       return i;
-}
-
-
-void DLL_PIB( DLL* this, float *ganan ){
-      if( this->len != 0 ) {
-
-            for( Node* tmp = this->first; tmp != NULL; tmp = tmp->next ) {
-
-				*ganan = *ganan + ( tmp->item.precio * tmp->cantidad );
-			}
-      }
 }
 
 
@@ -318,6 +308,8 @@ static void DLL_Swap( Node* first, Node* second ) {
 
 
 void DLL_QuickSort( DLL* this, Node* primero, Node* ultimo ) {
+
+      assert( this != NULL );
 
       size_t contador_ultimo = DLL_Contador( this, ultimo );
       size_t contador_primero = DLL_Contador( this, primero );
@@ -400,6 +392,8 @@ bool Stock_delete( Stock* this ) {
 
 void Stock_add( Stock* this, Producto* p, size_t cant ) {
       
+      assert( this != NULL );
+
       if( DLL_Search( this->list, p->bar_code ) == false ) {
 
             DLL_InsertBack( this->list, p, cant );
@@ -413,6 +407,8 @@ void Stock_add( Stock* this, Producto* p, size_t cant ) {
 // quita a un elemento de la lista
 void Stock_remove( Stock* this, Producto* p ) {
 
+      assert( this != NULL );
+
       if( DLL_Search( this->list, p->bar_code ) ) {
 
             *p = DLL_Remove( this->list );
@@ -422,11 +418,15 @@ void Stock_remove( Stock* this, Producto* p ) {
 
 bool Stock_search( Stock* this, Producto* p ) {
 
+      assert( this != NULL );
+
       return DLL_Search( this->list, p->bar_code );
 }
 
 
 bool Stock_search_by_bar_code( Stock* this, int bar_code ) {
+
+      assert( this != NULL );
 
       return DLL_Search( this->list, bar_code );
 }
@@ -435,11 +435,15 @@ bool Stock_search_by_bar_code( Stock* this, int bar_code ) {
 // devuelve una copia del producto al que apunta el 'cursor'
 Producto Stock_get( Stock* this ) {
 
+      assert( this != NULL );
+
       return DLL_Peek( this->list );
 }
 
 
 bool Stock_report( Stock* this ) {
+
+      assert( this != NULL );
 
       // imprime todos los productos de la lista
       return DLL_Print( this->list );
@@ -448,18 +452,23 @@ bool Stock_report( Stock* this ) {
 
 void Stock_MakeEmpty( Stock* this ) {
 
+      assert( this != NULL );
+
       DLL_MakeEmpty( this->list );
 }
 
 
 void Stock_PIB( Stock* this, float *dinero ) {
 	
+      assert( this != NULL );
+
       DLL_PIB( this->list , dinero );
 }
 
 
 bool Stock_Ordenamiento( Stock* this ) {
       
+      assert( this != NULL );
       bool done = false;
 
       if( DLL_IsEmpty( this->list ) == false ) {
