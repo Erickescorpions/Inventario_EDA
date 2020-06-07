@@ -1,6 +1,6 @@
 /**
  * Compilar:
- * gcc -Wall -std=c99 -o inventario.out main.c Stock.c
+ * gcc -Wall -std=c99 -o inventario.out main.c stock.c
  * 
  * Ejecutar:
  * ./inventario.out
@@ -10,7 +10,7 @@
 #include <string.h>
 #include <time.h>
 
-#include "Stock.h"
+#include "stock.h"
 
 //----------------------------------------------------------------------
 //  Programa principal
