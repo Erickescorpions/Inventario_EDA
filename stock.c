@@ -1,4 +1,4 @@
-#include "stock.h"
+#include "Stock.h"
 
 //----------------------------------------------------------------------
 //  Operaciones Lista doblemente enlazada
@@ -262,6 +262,7 @@ bool DLL_Print( DLL* this ) {
       return done;
 }
 
+
 void DLL_MakeEmpty( DLL* this ) {
 
       assert( this );
@@ -275,6 +276,7 @@ void DLL_MakeEmpty( DLL* this ) {
 
       reset( this );
 }
+
 
 static size_t DLL_Contador( DLL* this, Node* n ) {
 
@@ -290,6 +292,7 @@ static size_t DLL_Contador( DLL* this, Node* n ) {
       return i;
 }
 
+
 void DLL_PIB( DLL* this, float *ganan ){
       if( this->len != 0 ) {
 
@@ -299,6 +302,7 @@ void DLL_PIB( DLL* this, float *ganan ){
 			}
       }
 }
+
 
 static void DLL_Swap( Node* first, Node* second ) {
 
@@ -393,6 +397,7 @@ bool Stock_delete( Stock* this ) {
       return done;
 }
 
+
 void Stock_add( Stock* this, Producto* p, size_t cant ) {
       
       if( DLL_Search( this->list, p->bar_code ) == false ) {
@@ -404,6 +409,7 @@ void Stock_add( Stock* this, Producto* p, size_t cant ) {
       }
 }
 
+
 // quita a un elemento de la lista
 void Stock_remove( Stock* this, Producto* p ) {
 
@@ -413,10 +419,12 @@ void Stock_remove( Stock* this, Producto* p ) {
       } 
 }
 
+
 bool Stock_search( Stock* this, Producto* p ) {
 
       return DLL_Search( this->list, p->bar_code );
 }
+
 
 bool Stock_search_by_bar_code( Stock* this, int bar_code ) {
 
@@ -430,21 +438,25 @@ Producto Stock_get( Stock* this ) {
       return DLL_Peek( this->list );
 }
 
+
 bool Stock_report( Stock* this ) {
 
       // imprime todos los productos de la lista
       return DLL_Print( this->list );
 }
 
+
 void Stock_MakeEmpty( Stock* this ) {
 
       DLL_MakeEmpty( this->list );
 }
 
+
 void Stock_PIB( Stock* this, float *dinero ) {
 	
       DLL_PIB( this->list , dinero );
 }
+
 
 bool Stock_Ordenamiento( Stock* this ) {
       

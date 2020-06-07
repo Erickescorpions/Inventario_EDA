@@ -21,6 +21,7 @@ typedef struct Producto{
 
 // Los productos NO tienen operaciones, accesaremos directamente a los campos
 
+
 //----------------------------------------------------------------------
 //  Lista doblemente enlazada
 //----------------------------------------------------------------------
@@ -123,6 +124,7 @@ void DLL_PIB( DLL* this, float* ganan );
  * @param ultimo Referencia a un objeto Nodo
  */
 void DLL_QuickSort( DLL* this, Node* primero, Node* ultimo );
+
 
 //----------------------------------------------------------------------
 //  Inventario
